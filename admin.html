@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - CB-AI Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ui-improvements.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <i class="fas fa-graduation-cap text-blue-600 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl text-gray-800">CB-AI Admin</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="showUserManagement()" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-users"></i> Users
+                    </button>
+                    <button onclick="showContentManagement()" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-folder"></i> Content
+                    </button>
+                    <button onclick="showAnalytics()" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </button>
+                    <button onclick="showSettings()" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                    <div class="h-8 w-8 bg-red-600 rounded-full flex items-center justify-center text-white font-bold">
+                        A
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Dashboard Overview -->
+        <div class="mb-8 ui-card">
+            <h1 class="text-3xl font-bold mb-6">Admin Dashboard</h1>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-blue-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm">+12%</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">2,847</h3>
+                    <p class="text-gray-600 text-sm">Total Users</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-green-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm">+8%</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">1,234</h3>
+                    <p class="text-gray-600 text-sm">Active Learners</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-project-diagram text-purple-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm">+23%</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">892</h3>
+                    <p class="text-gray-600 text-sm">Projects Completed</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-briefcase text-orange-600 text-xl"></i>
+                        </div>
+                        <span class="text-green-600 text-sm">+15%</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-1">156</h3>
+                    <p class="text-gray-600 text-sm">Job Placements</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 ui-card">
+            <!-- Main Content Area -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Recent Activity</h2>
+                        <button class="text-blue-600 hover:text-blue-800 text-sm">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user-plus text-blue-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm"><strong>New user registration:</strong> John Doe joined from United States</p>
+                                <p class="text-xs text-gray-500">2 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-check-circle text-green-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm"><strong>Project completed:</strong> Data Analysis Dashboard by Sarah Chen</p>
+                                <p class="text-xs text-gray-500">15 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-trophy text-purple-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm"><strong>Achievement unlocked:</strong> Michael Park earned "Fast Learner" badge</p>
+                                <p class="text-xs text-gray-500">1 hour ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded">
+                            <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-briefcase text-orange-600 text-xs"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm"><strong>Job placement:</strong> Emma Wilson landed Data Analyst role at TechCorp</p>
+                                <p class="text-xs text-gray-500">2 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Management -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">Content Management</h2>
+                        <button onclick="showContentManagement()" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus mr-2"></i> Add Content
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-4 gap-4 text-center">
+                            <div class="bg-blue-50 p-4 rounded">
+                                <div class="text-2xl font-bold text-blue-600">24</div>
+                                <p class="text-sm text-gray-600">Assessments</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded">
+                                <div class="text-2xl font-bold text-green-600">156</div>
+                                <p class="text-sm text-gray-600">Projects</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded">
+                                <div class="text-2xl font-bold text-purple-600">89</div>
+                                <p class="text-sm text-gray-600">Courses</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded">
+                                <div class="text-2xl font-bold text-orange-600">1.2K</div>
+                                <p class="text-sm text-gray-600">Resources</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Health -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold">System Health</h2>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">All Systems Operational</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">API Response Time</span>
+                                <span class="text-sm text-green-600">Normal (245ms)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">Database Performance</span>
+                                <span class="text-sm text-green-600">Optimal</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">ML Model Accuracy</span>
+                                <span class="text-sm text-blue-600">92.3%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 92.3%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">Storage Usage</span>
+                                <span class="text-sm text-yellow-600">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-yellow-600 h-2 rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button onclick="createAnnouncement()" class="w-full btn btn-secondary text-left">
+                            <i class="fas fa-bullhorn mr-3"></i> Create Announcement
+                        </button>
+                        <button onclick="manageUsers()" class="w-full btn btn-secondary text-left">
+                            <i class="fas fa-user-cog mr-3"></i> User Management
+                        </button>
+                        <button onclick="viewReports()" class="w-full btn btn-secondary text-left">
+                            <i class="fas fa-file-alt mr-3"></i> View Reports
+                        </button>
+                        <button onclick="systemSettings()" class="w-full btn btn-secondary text-left">
+                            <i class="fas fa-cogs mr-3"></i> System Settings
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Users -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Recent Users</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                                JD
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">John Doe</p>
+                                <p class="text-xs text-gray-500">Joined 2 hours ago</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Active</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                                SC
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Sarah Chen</p>
+                                <p class="text-xs text-gray-500">Joined 5 hours ago</p>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">New</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                                MP
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium">Michael Park</p>
+                                <p class="text-xs text-gray-500">Joined yesterday</p>
+                            </div>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Active</span>
+                        </div>
+                    </div>
+                    <button class="w-full text-center text-blue-600 text-sm hover:underline mt-4">
+                        View All Users →
+                    </button>
+                </div>
+
+                <!-- System Alerts -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">System Alerts</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Storage Warning</p>
+                                <p class="text-xs text-gray-600">Disk usage approaching 70%</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Model Update Available</p>
+                                <p class="text-xs text-gray-600">Career matching model v2.1 ready</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Backup Complete</p>
+                                <p class="text-xs text-gray-600">Daily backup successful</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

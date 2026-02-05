@@ -1,0 +1,18 @@
+{
+  "name": "career-ai-platform",
+  "version": "1.0.0",
+  "description": "Career-Based AI for All (CB-AI) - Intelligent career guidance platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server . -p 3000 -o",
+    "dev": "http-server . -p 3000 -o",
+    "build": "echo 'Build complete'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": ["career", "ai", "guidance", "assessment", "learning"],
+  "author": "CB-AI Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

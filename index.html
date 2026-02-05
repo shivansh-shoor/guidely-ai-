@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CB-AI - Career-Based AI for All. Intelligent career guidance platform combining psychometric assessment, real-time labor market intelligence, and adaptive learning roadmaps.">
+    <title>CB-AI - Career-Based AI for All</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ui-improvements.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+        
+        .hero-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            50% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(0.8); opacity: 1; }
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 2s;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        .persona-card {
+            transition: all 0.3s ease;
+        }
+        
+        .persona-card:hover {
+            transform: scale(1.02) translateY(-4px);
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .desktop-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="live-region" class="live-region" aria-live="polite" aria-atomic="true"></div>
+    
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle md:hidden fixed top-4 right-4 z-50 bg-white p-2 rounded-lg shadow-lg" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars text-gray-700"></i>
+    </button>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="flex flex-col space-y-4">
+            <a href="#features" class="text-gray-700 hover:text-blue-600 font-medium py-2">
+                <i class="fas fa-star mr-2"></i> Features
+            </a>
+            <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 font-medium py-2">
+                <i class="fas fa-cog mr-2"></i> How It Works
+            </a>
+            <a href="#personas" class="text-gray-700 hover:text-blue-600 font-medium py-2">
+                <i class="fas fa-users mr-2"></i> Who It's For
+            </a>
+            <a href="#assessment" class="text-gray-700 hover:text-blue-600 font-medium py-2">
+                <i class="fas fa-play-circle mr-2"></i> Get Started
+            </a>
+        </div>
+    </div>
+    
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav bg-white/95 shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="relative">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute -bottom-2 -right-2 w-4 h-4 bg-green-500 rounded-full pulse-ring"></div>
+                    </div>
+                    <span class="hero-title text-3xl font-bold">CB-AI</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#features" class="nav-link text-gray-700 hover:text-blue-600 px-4 py-2 font-medium transition">
+                        <i class="fas fa-rocket mr-2"></i> Features
+                    </a>
+                    <a href="#how-it-works" class="nav-link text-gray-700 hover:text-blue-600 px-4 py-2 font-medium transition">
+                        <i class="fas fa-magic mr-2"></i> How It Works
+                    </a>
+                    <a href="#personas" class="nav-link text-gray-700 hover:text-blue-600 px-4 py-2 font-medium transition">
+                        <i class="fas fa-users mr-2"></i> Who It's For
+                    </a>
+                    <a href="#assessment" class="nav-link bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium transition hover:shadow-lg hover:scale-105">
+                        <i class="fas fa-play mr-2"></i> Start Assessment
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button onclick="showLanguageSelector()" class="text-gray-700 hover:text-blue-600 px-4 py-2 font-medium transition">
+                        <i class="fas fa-globe"></i> EN
+                    </button>
+                    <button onclick="showLogin()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium transition hover:shadow-lg hover:scale-105">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section - Enhanced -->
+    <section class="relative py-20 lg:py-32 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl opacity-20"></div>
+            <div class="absolute top-40 right-20 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-20"></div>
+            <div class="absolute bottom-20 left-1/4 w-64 h-64 bg-indigo-500 rounded-full blur-3xl opacity-15"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center text-white">
+                <div class="mb-6">
+                    <span class="inline-block px-4 py-1 bg-white/20 rounded-full text-sm font-medium">
+                        AI-Powered Career Guidance
+                    </span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                    Find Your Perfect<br>
+                    <span class="hero-title">Career Path</span> with AI
+                </h1>
+                
+                <p class="text-xl md:text-2xl mb-12 text-blue-100 max-w-3xl mx-auto leading-relaxed">
+                    Personalized career guidance combining psychometric assessment, real-time labor market intelligence, 
+                    and adaptive learning roadmaps to guide you from exploration to employment.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-12">
+                    <button onclick="startAssessment()" class="cta-button bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition hover:shadow-2xl hover:scale-105">
+                        <i class="fas fa-brain mr-2"></i> Take Assessment
+                    </button>
+                    <button onclick="selectCareer()" class="cta-button bg-white text-transparent border-2 border-white px-8 py-4 rounded-xl font-bold text-lg transition hover:shadow-2xl hover:scale-105">
+                        <i class="fas fa-bullseye mr-2"></i> I Know My Goal
+                    </button>
+                </div>
+                
+                <div class="flex justify-center space-x-8 text-blue-200 text-sm">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>20-30 min assessment</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>95% roadmap accuracy</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Real-time job insights</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section - Enhanced -->
+    <section class="py-16 bg-white/95">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="stat-card glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">2.8K+</div>
+                    <div class="text-gray-600 font-medium">Users Worldwide</div>
+                    <div class="mt-3 flex justify-center">
+                        <i class="fas fa-users text-blue-600 text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">95%</div>
+                    <div class="text-gray-600 font-medium">Roadmap Accuracy</div>
+                    <div class="mt-3 flex justify-center">
+                        <i class="fas fa-route text-purple-600 text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">15K+</div>
+                    <div class="text-gray-600 font-medium">Career Paths</div>
+                    <div class="mt-3 flex justify-center">
+                        <i class="fas fa-project-diagram text-green-600 text-2xl"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card glass-card rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-2">92%</div>
+                    <div class="text-gray-600 font-medium">Match Satisfaction</div>
+                    <div class="mt-3 flex justify-center">
+                        <i class="fas fa-heart text-red-500 text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section - Enhanced -->
+    <section id="features" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="gradient-text">AI-Powered</span> Career Guidance
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive tools designed to help you discover, prepare, and land your dream career
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card glass-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto floating-card">
+                        <i class="fas fa-brain text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Adaptive Assessment</h3>
+                    <p class="text-gray-600 mb-4">Computerized adaptive testing evaluates aptitude, interests, personality, and learning style with personalized question flow</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Real-time difficulty adjustment</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Explainable AI recommendations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Multiple question formats</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card glass-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 mx-auto floating-card" style="animation-delay: 0.5s;">
+                        <i class="fas fa-route text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Personalized Roadmaps</h3>
+                    <p class="text-gray-600 mb-4">DAG-based learning paths with curated resources, projects, and milestones tailored to your schedule</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Skill dependency graphs</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Curated learning resources</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Timeline customization</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card glass-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 mx-auto floating-card" style="animation-delay: 1s;">
+                        <i class="fas fa-chart-line text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Labor Market Intelligence</h3>
+                    <p class="text-gray-600 mb-4">Real-time job market data, salary insights, demand trends for informed career decisions</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Live job market data</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Salary range estimates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Demand forecasting</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card glass-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6 mx-auto floating-card" style="animation-delay: 1.5s;">
+                        <i class="fas fa-briefcase text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Job Readiness Tools</h3>
+                    <p class="text-gray-600 mb-4">AI-powered resume builder, mock interviews, portfolio projects, and application tracking</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Resume auto-generation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Mock interview practice</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Portfolio project templates</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card glass-card rounded-2xl p-8">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6 mx-auto floating-card" style="animation-delay: 2s;">
+                        <i class="fas fa-trophy text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Portfolio & Projects</h3>
+                    <p class="text-gray-600 mb-4">Build real-world projects with templates, automated feedback, and CI integration for employable demos</p>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Project templates library</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>Automated code reviews</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-3 mt-1"></i>
+                            <span>GitHub integration</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works - Enhanced -->
+    <section id="how-it-works" class="py-24 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold mb-16 text-center">
+                How <span class="gradient-text">CB-AI</span> Works
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <div class="text-4xl font-bold">1</div>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">Assessment</h4>
+                    <p class="text-gray-400 text-sm">Complete adaptive evaluation of skills, interests & personality</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <div class="text-4xl font-bold">2</div>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">Matching</h4>
+                    <p class="text-gray-400 text-sm">AI matches you with best-fitting careers based on your profile</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <div class="text-4xl font-bold">3</div>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">Roadmap</h4>
+                    <p class="text-gray-400 text-sm">Get personalized learning path with curated resources & milestones</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <div class="text-4xl font-bold">4</div>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">Success</h4>
+                    <p class="text-gray-400 text-sm">Build portfolio, prepare for interviews & land your dream job</p>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">Complete Assessment</h4>
+                            <p class="text-gray-600">20-30 minutes of adaptive questions</p>
+                        </div>
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="w-1/2 h-px bg-gray-600"></div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">Get Matches</h4>
+                            <p class="text-gray-600">AI analyzes your profile against labor market data</p>
+                        </div>
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-magic text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="w-1/2 h-px bg-gray-600"></div>
+                    <div class="flex items-center">
+                        <div>
+                            <h4 class="text-2xl font-bold mb-2">View Roadmap</h4>
+                            <p class="text-gray-600">Personalized learning path with curated resources</p>
+                        </div>
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-route text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+                    <div class="w-1/2 h-px bg-gray-600"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button onclick="startAssessment()" class="bg-white text-gray-900 px-8 py-4 rounded-xl font-bold text-lg transition hover:shadow-2xl hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i> Start Your Journey Now
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Personas Section - Enhanced -->
+    <section id="personas" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 text-center">
+                Who <span class="gradient-text">CB-AI</span> Helps
+            </h2>
+            <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto">
+                Designed for diverse users across different backgrounds and career stages
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="persona-card glass-card rounded-2xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-user-graduate text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Students</h3>
+                    <p class="text-gray-600 mb-4">Exploring careers after high school with limited guidance</p>
+                    <div class="space-y-2 text-left">
+                        <p class="text-sm"><i class="fas fa-check-circle text-blue-500 mr-2"></i> AI-powered career discovery</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Personalized learning roadmaps</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Entry-level project templates</p>
+                    </div>
+                    <div class="mt-6">
+                        <span class="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">Student Plan</span>
+                    </div>
+                </div>
+                
+                <div class="persona-card glass-card rounded-2xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-exchange-alt text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Career Switchers</h3>
+                    <p class="text-gray-600 mb-4">Professionals transitioning to new industries or roles</p>
+                    <div class="space-y-2 text-left">
+                        <p class="text-sm"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Targeted career roadmaps</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Advanced project portfolio</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-purple-500 mr-2"></i> Industry-specific interview prep</p>
+                    </div>
+                    <div class="mt-6">
+                        <span class="inline-block px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium">Switcher Plan</span>
+                    </div>
+                </div>
+                
+                <div class="persona-card glass-card rounded-2xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-wifi text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Rural Learners</h3>
+                    <p class="text-gray-600 mb-4">Users with limited connectivity in remote areas</p>
+                    <div class="space-y-2 text-left">
+                        <p class="text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i> Offline assessment mode</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i> Low-bandwidth resource bundles</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-green-500 mr-2"></i> IVR/SMS-based access</p>
+                    </div>
+                    <div class="mt-6">
+                        <span class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">Rural Access</span>
+                    </div>
+                </div>
+                
+                <div class="persona-card glass-card rounded-2xl p-8 text-center">
+                    <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-chart-bar text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Professionals</h3>
+                    <p class="text-gray-600 mb-4">Experienced workers seeking advancement and new skills</p>
+                    <div class="space-y-2 text-left">
+                        <p class="text-sm"><i class="fas fa-check-circle text-orange-500 mr-2"></i> Executive-level roadmaps</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-orange-500 mr-2"></i> Leadership skill development</p>
+                        <p class="text-sm"><i class="fas fa-check-circle text-orange-500 mr-2"></i> Networking and mentorship</p>
+                    </div>
+                    <div class="mt-6">
+                        <span class="inline-block px-4 py-2 bg-orange-600 text-white rounded-lg text-sm font-medium">Professional Plan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Assessment CTA Section -->
+    <section id="assessment" class="py-24 bg-gradient-to-br from-blue-600 to-purple-700 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Ready to <span class="bg-white/20 px-4 py-2 rounded-xl">Transform</span> Your Career?
+            </h2>
+            <p class="text-xl mb-12 text-blue-100 max-w-2xl mx-auto">
+                Start with a free assessment or select your target career to get a personalized roadmap
+                designed specifically for your goals and constraints.
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
+                <div class="glass-card p-8 text-center">
+                    <div class="text-6xl font-bold mb-2">1</div>
+                    <p class="text-blue-100 font-medium">Take Assessment</p>
+                    <div class="mt-4">
+                        <button onclick="startAssessment()" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition hover:shadow-2xl hover:scale-105">
+                            <i class="fas fa-brain mr-2"></i> Start Assessment
+                        </button>
+                    </div>
+                </div>
+                <div class="text-4xl text-white font-bold">OR</div>
+                <div class="glass-card p-8 text-center">
+                    <div class="text-6xl font-bold mb-2">2</div>
+                    <p class="text-blue-100 font-medium">Select Career</p>
+                    <div class="mt-4">
+                        <button onclick="selectCareer()" class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold text-lg transition hover:shadow-2xl hover:scale-105">
+                            <i class="fas fa-target mr-2"></i> Choose Career
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-blue-200">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>20-30 minutes</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>AI-powered matching</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Personalized roadmap</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Free to start</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer - Enhanced -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-graduation-cap text-blue-500 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">CB-AI</h4>
+                    <p class="text-gray-400 text-sm">Career-Based AI for All</p>
+                    <div class="mt-4 space-y-2">
+                        <a href="#features" class="text-gray-400 hover:text-white transition">Features</a><br>
+                        <a href="#how-it-works" class="text-gray-400 hover:text-white transition">How It Works</a><br>
+                        <a href="#personas" class="text-gray-400 hover:text-white transition">Who It's For</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Product</h4>
+                    <div class="mt-4 space-y-2">
+                        <a href="#assessment" class="text-gray-400 hover:text-white transition">Start Assessment</a><br>
+                        <a href="portfolio.html" class="text-gray-400 hover:text-white transition">Portfolio</a><br>
+                        <a href="job-readiness.html" class="text-gray-400 hover:text-white transition">Job Readiness</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Resources</h4>
+                    <div class="mt-4 space-y-2">
+                        <a href="#" class="text-gray-400 hover:text-white transition">Documentation</a><br>
+                        <a href="#" class="text-gray-400 hover:text-white transition">API Access</a><br>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Support</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-xl font-semibold mb-4">Company</h4>
+                    <div class="mt-4 space-y-2">
+                        <p class="text-gray-400 mb-2">About Us</p>
+                        <p class="text-gray-400 mb-2">Privacy Policy</p>
+                        <p class="text-gray-400">Terms of Service</p>
+                        <p class="text-gray-400">Contact</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-gray-400 mb-4">
+                    &copy; 2026 CB-AI Platform. Making career guidance accessible to everyone.
+                </p>
+                <div class="flex justify-center space-x-6 text-gray-500">
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-twitter mr-2"></i> Twitter
+                    </a>
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                    </a>
+                    <a href="#" class="hover:text-white transition">
+                        <i class="fab fa-github mr-2"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
+    
+    <script src="app.js"></script>
+    
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
+        
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.desktop-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-xl');
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                nav.classList.remove('shadow-xl');
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
